@@ -18,7 +18,7 @@ export default class Chat extends Component {
 		return (
 			<div className="chat">
 				<div className="videos">
-					<video ref={this.user1} autoPlay></video>
+					<video ref={this.user1} autoPlay playsInline></video>
 					<div>
 						<button
 							onClick={() => {
@@ -37,7 +37,7 @@ export default class Chat extends Component {
 							open audio
 						</button>
 					</div>
-					<video ref={this.user2} autoPlay></video>
+					<video ref={this.user2} autoPlay playsInline></video>
 				</div>
 				<div className="users">
 					{this.state.users.map((e) => (
