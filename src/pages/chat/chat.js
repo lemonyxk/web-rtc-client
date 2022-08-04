@@ -28,6 +28,7 @@ export default class Chat extends Component {
 						// onDoubleClick={() => this.user1.current.requestFullscreen()}
 						autoPlay
 						playsInline
+						muted="muted"
 					></video>
 					<video
 						ref={this.user2}
