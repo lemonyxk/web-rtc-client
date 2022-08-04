@@ -204,9 +204,9 @@ export default class Chat extends Component {
 
 		if (data.type != "screen") {
 			this.localStream = await navigator.mediaDevices.getUserMedia(this.getType(data.type));
-			this.user1.current.srcObject = this.localStream;
 			this.user1.current.muted = true;
 			this.user1.current.volume = 0;
+			this.user1.current.srcObject = this.localStream;
 			this.localStream.getTracks().forEach((track) => {
 				this.peerConnection.addTrack(track, this.localStream);
 			});
@@ -231,9 +231,10 @@ export default class Chat extends Component {
 		} else {
 			this.localStream = await navigator.mediaDevices.getUserMedia(this.getType(type));
 		}
-		this.user1.current.srcObject = this.localStream;
+
 		this.user1.current.muted = true;
 		this.user1.current.volume = 0;
+		this.user1.current.srcObject = this.localStream;
 		this.localStream.getTracks().forEach((track) => {
 			this.peerConnection.addTrack(track, this.localStream);
 		});
