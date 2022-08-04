@@ -206,6 +206,7 @@ export default class Chat extends Component {
 			this.localStream = await navigator.mediaDevices.getUserMedia(this.getType(data.type));
 			this.user1.current.srcObject = this.localStream;
 			this.user1.current.muted = true;
+			this.user1.current.volume = 0;
 			this.localStream.getTracks().forEach((track) => {
 				this.peerConnection.addTrack(track, this.localStream);
 			});
@@ -232,6 +233,7 @@ export default class Chat extends Component {
 		}
 		this.user1.current.srcObject = this.localStream;
 		this.user1.current.muted = true;
+		this.user1.current.volume = 0;
 		this.localStream.getTracks().forEach((track) => {
 			this.peerConnection.addTrack(track, this.localStream);
 		});
