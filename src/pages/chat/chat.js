@@ -24,7 +24,6 @@ export default class Chat extends Component {
 				<div className="videos">
 					<video
 						ref={this.user1}
-						muted
 						disablePictureInPicture={true}
 						// onDoubleClick={() => this.user1.current.requestFullscreen()}
 						autoPlay
@@ -206,6 +205,7 @@ export default class Chat extends Component {
 		if (data.type != "screen") {
 			this.localStream = await navigator.mediaDevices.getUserMedia(this.getType(data.type));
 			this.user1.current.srcObject = this.localStream;
+			this.user1.current.muted = true;
 			this.localStream.getTracks().forEach((track) => {
 				this.peerConnection.addTrack(track, this.localStream);
 			});
@@ -231,6 +231,7 @@ export default class Chat extends Component {
 			this.localStream = await navigator.mediaDevices.getUserMedia(this.getType(type));
 		}
 		this.user1.current.srcObject = this.localStream;
+		this.user1.current.muted = true;
 		this.localStream.getTracks().forEach((track) => {
 			this.peerConnection.addTrack(track, this.localStream);
 		});
