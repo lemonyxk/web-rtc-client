@@ -23,11 +23,13 @@
                 // background-color: black;
                 width: 400px;
                 padding: 10px;
-    
-                button {
-                    width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+
+                input {
                     height: 30px;
-                    margin: 5px 0;
+                    margin: 0 5px;
                 }
             }
         }

@@ -1,0 +1,4 @@
+{
+	"development": { "addr": "ws://192.168.0.100:8999" },
+	"production": { "addr": "wss://web-rtc-server.lemonyxk.com" }
+}

@@ -73,3 +73,6 @@ video::-webkit-media-controls-time-remaining-display { display: none; }
 
 video::-webkit-media-controls-mute-button { display: none; }
 video::-webkit-media-controls-toggle-closed-captions-button { display: none; }
+video::-webkit-media-controls-panel {
+	background-image: linear-gradient(transparent, transparent) !important;  
+}

@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import ws from "../../tools/socket";
 import Socket from "../../lib/socket";
 import "./chat.scss";
+import cfg from "../../config.json";
+import { Comfirm } from "../../lib/comfirm";
+
+let config = cfg[process.env.NODE_ENV];
 
 let servers = {
 	iceServers: [
@@ -20,14 +24,15 @@ export default class Chat extends Component {
 				<div className="videos">
 					<video
 						ref={this.user1}
-						disablePictureInPicture="true"
-						onDoubleClick={() => this.user1.current.requestFullscreen()}
+						muted
+						disablePictureInPicture={true}
+						// onDoubleClick={() => this.user1.current.requestFullscreen()}
 						autoPlay
 						playsInline
 					></video>
 					<video
 						ref={this.user2}
-						disablePictureInPicture="true"
+						disablePictureInPicture={true}
 						onDoubleClick={() => this.user2.current.requestFullscreen()}
 						autoPlay
 						playsInline
@@ -65,7 +70,7 @@ export default class Chat extends Component {
 		.slice(0, 8);
 
 	componentDidMount() {
-		ws.socket = new Socket({ addr: "wss://web-rtc-server.lemonyxk.com", heartBeatInterval: 1 });
+		ws.socket = new Socket({ addr: config.addr, heartBeatInterval: 1 });
 		ws.socket.before = () => (ws.socket.Global = { name: this.name });
 
 		ws.socket.AddListener("/UserList", this.userList.bind(this));
@@ -86,7 +91,7 @@ export default class Chat extends Component {
 		ws.socket.RemoveListener("/Login");
 		ws.socket.RemoveListener("/RequestAccount");
 
-		this.reset();
+		this.stop();
 	}
 
 	localStream = null;
@@ -106,7 +111,7 @@ export default class Chat extends Component {
 	}
 
 	async createPeerConnection() {
-		this.reset();
+		this.stop();
 
 		this.peerConnection = new RTCPeerConnection(servers);
 
@@ -140,6 +145,22 @@ export default class Chat extends Component {
 	}
 
 	async createOffer(e, data) {
+		// let openVideo = false;
+		// let openAudio = false;
+		// let openScreen = false;
+
+		// Comfirm.open({
+		// 	title: `${data.from} want to share with you on ${data.type}`,
+		// 	text: (
+		// 		<div>
+		// 			open video: <input type="checkbox" onChange={(e) => (openVideo = !openVideo)} />
+		// 			open audio: <input type="checkbox" onChange={(e) => (openAudio = !openAudio)} />
+		// 			open screen: <input type="checkbox" onChange={(e) => (openScreen = !openScreen)} />
+		// 		</div>
+		// 	),
+		// 	submit: () => this.onAnswer(data),
+		// });
+
 		var ok = window.confirm(data.from + " call you!!!");
 		if (!ok) return false;
 
@@ -168,7 +189,7 @@ export default class Chat extends Component {
 		if (type == "screen") return { video: true, audio: true };
 	}
 
-	reset() {
+	stop() {
 		if (this.peerConnection) this.peerConnection.close();
 		if (this.localStream) {
 			this.localStream.getTracks().forEach((track) => {
@@ -176,6 +197,8 @@ export default class Chat extends Component {
 			});
 		}
 	}
+
+	reset() {}
 
 	async onAnswer(data) {
 		await this.createPeerConnection();
@@ -207,7 +230,6 @@ export default class Chat extends Component {
 		} else {
 			this.localStream = await navigator.mediaDevices.getUserMedia(this.getType(type));
 		}
-
 		this.user1.current.srcObject = this.localStream;
 		this.localStream.getTracks().forEach((track) => {
 			this.peerConnection.addTrack(track, this.localStream);
