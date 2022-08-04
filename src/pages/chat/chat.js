@@ -117,6 +117,12 @@ export default class Chat extends Component {
 
 		this.remoteStream = new MediaStream();
 		this.user2.current.srcObject = this.remoteStream;
+
+		this.peerConnection.ontrack = async (event) => {
+			event.streams[0].getTracks().forEach((track) => {
+				this.remoteStream.addTrack(track);
+			});
+		};
 	}
 
 	async wait() {
@@ -195,24 +201,15 @@ export default class Chat extends Component {
 	reset() {}
 
 	async onAnswer(data) {
-		if (data.type != "screen") {
-			this.localStream = await navigator.mediaDevices.getUserMedia(this.getType(data.type));
-			this.user1.current.srcObject = this.localStream;
-		}
-
 		await this.createPeerConnection();
 
 		if (data.type != "screen") {
+			this.localStream = await navigator.mediaDevices.getUserMedia(this.getType(data.type));
+			this.user1.current.srcObject = this.localStream;
 			this.localStream.getTracks().forEach((track) => {
 				this.peerConnection.addTrack(track, this.localStream);
 			});
 		}
-
-		this.peerConnection.ontrack = async (event) => {
-			event.streams[0].getTracks().forEach((track) => {
-				this.remoteStream.addTrack(track);
-			});
-		};
 
 		let offer = JSON.parse(data.data);
 		await this.peerConnection.setRemoteDescription(offer);
@@ -226,24 +223,18 @@ export default class Chat extends Component {
 	}
 
 	async onCall(user, type) {
+		await this.createPeerConnection();
+
 		if (type == "screen") {
 			this.localStream = await navigator.mediaDevices.getDisplayMedia(this.getType(type));
 		} else {
 			this.localStream = await navigator.mediaDevices.getUserMedia(this.getType(type));
 		}
+
 		this.user1.current.srcObject = this.localStream;
-
-		await this.createPeerConnection();
-
 		this.localStream.getTracks().forEach((track) => {
 			this.peerConnection.addTrack(track, this.localStream);
 		});
-
-		this.peerConnection.ontrack = async (event) => {
-			event.streams[0].getTracks().forEach((track) => {
-				this.remoteStream.addTrack(track);
-			});
-		};
 
 		let offer = await this.peerConnection.createOffer();
 		await this.peerConnection.setLocalDescription(offer);
