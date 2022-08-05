@@ -34,6 +34,9 @@ class ComfirmContainer extends Component {
 
 		this.title = config.title || "";
 		this.text = config.text || "";
+		this.width = config.width || window.innerWidth / 2;
+		this.height = config.height || window.innerHeight / 2;
+		this.style = config.style || {};
 
 		this.setState({ open: true });
 	}
@@ -45,7 +48,17 @@ class ComfirmContainer extends Component {
 	render() {
 		return (
 			this.state.open && (
-				<div className="comfirm">
+				<div
+					className="comfirm"
+					style={{
+						position: "absolute",
+						left: (window.innerWidth - this.width) / 2 + "px",
+						top: (window.innerHeight - this.height) / 2 + "px",
+						width: this.width,
+						height: this.height,
+						...this.style,
+					}}
+				>
 					<div id="responsive-dialog-title">{this.title}</div>
 					<div>
 						<div>{this.text}</div>

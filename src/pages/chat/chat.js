@@ -26,7 +26,7 @@ export default class Chat extends Component {
 						ref={this.user1}
 						disablePictureInPicture={true}
 						// onDoubleClick={() => this.user1.current.requestFullscreen()}
-						autoPlay
+						// autoPlay
 						playsInline
 						muted
 					></video>
@@ -34,7 +34,7 @@ export default class Chat extends Component {
 						ref={this.user2}
 						disablePictureInPicture={true}
 						onDoubleClick={() => this.user2.current.requestFullscreen()}
-						autoPlay
+						// autoPlay
 						playsInline
 					></video>
 				</div>
@@ -117,6 +117,7 @@ export default class Chat extends Component {
 
 		this.remoteStream = new MediaStream();
 		this.user2.current.srcObject = this.remoteStream;
+		this.user2.current.play();
 
 		this.peerConnection.ontrack = async (event) => {
 			event.streams[0].getTracks().forEach((track) => {
@@ -161,10 +162,17 @@ export default class Chat extends Component {
 		// 	submit: () => this.onAnswer(data),
 		// });
 
-		var ok = window.confirm(data.from + " call you!!!");
-		if (!ok) return false;
+		Comfirm.open({
+			test: <button>hello</button>,
+			submit: () => {
+				this.onAnswer(data);
+			},
+			cancel: () => {},
+			style: { backgroundColor: "red" },
+		});
 
-		this.onAnswer(data);
+		// var ok = window.confirm(data.from + " call you!!!");
+		// if (!ok) return false;
 	}
 
 	createAnswer(e, data) {
@@ -206,6 +214,7 @@ export default class Chat extends Component {
 		if (data.type != "screen") {
 			this.localStream = await navigator.mediaDevices.getUserMedia(this.getType(data.type));
 			this.user1.current.srcObject = this.localStream;
+			this.user1.current.play();
 			this.localStream.getTracks().forEach((track) => {
 				this.peerConnection.addTrack(track, this.localStream);
 			});
@@ -232,6 +241,7 @@ export default class Chat extends Component {
 		}
 
 		this.user1.current.srcObject = this.localStream;
+		this.user1.current.play();
 		this.localStream.getTracks().forEach((track) => {
 			this.peerConnection.addTrack(track, this.localStream);
 		});
