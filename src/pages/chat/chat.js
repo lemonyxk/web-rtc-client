@@ -101,21 +101,22 @@ export default class Chat extends Component {
 	createCallVideo(user) {
 		return (
 			<div className="videos">
-				<div className="top">
+				<div className="top"></div>
+				<div className="middle">
 					<video
 						ref={this.user1}
 						disablePictureInPicture={true}
 						// autoPlay
 						playsInline
 						muted
-						hidden
+						style={{ display: "none" }}
 					></video>
 					<video
 						ref={this.user2}
 						disablePictureInPicture={true}
 						// autoPlay
 						playsInline
-						hidden
+						style={{ display: "none" }}
 					></video>
 				</div>
 				<div className="bottom">
@@ -149,21 +150,22 @@ export default class Chat extends Component {
 	createAnswerVideo(data) {
 		return (
 			<div className="videos">
-				<div className="top">
+				<div className="top"></div>
+				<div className="middle">
 					<video
 						ref={this.user1}
 						disablePictureInPicture={true}
 						// autoPlay
 						playsInline
 						muted
-						hidden
+						style={{ display: "none" }}
 					></video>
 					<video
 						ref={this.user2}
 						disablePictureInPicture={true}
 						// autoPlay
 						playsInline
-						hidden
+						style={{ display: "none" }}
 					></video>
 				</div>
 				<div className="bottom">
@@ -269,9 +271,9 @@ export default class Chat extends Component {
 
 	async start(e, data) {
 		this.user1.current.play();
-		this.user1.current.hidden = false;
+		this.user1.current.removeAttribute("style");
 		this.user2.current.play();
-		this.user2.current.hidden = false;
+		this.user2.current.removeAttribute("style");
 		this.started = true;
 	}
 
