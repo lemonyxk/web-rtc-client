@@ -1,4 +1,10 @@
 {
-	"development": { "addr": "ws://192.168.0.100:8999" },
-	"production": { "addr": "wss://web-rtc-server.lemonyxk.com" }
+	"development": {
+		"addr": "wss://server.server.com",
+		"urls": ["stun:stun.l.google.com:19302"]
+	},
+	"production": {
+		"addr": "wss://web-rtc-server.lemonyxk.com",
+		"urls": ["stun:lemonyxk.com:3478", "turn:lemonyxk.com:3478"]
+	}
 }

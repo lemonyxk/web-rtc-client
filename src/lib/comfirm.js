@@ -37,6 +37,7 @@ class ComfirmContainer extends Component {
 		this.width = config.width || window.innerWidth / 2;
 		this.height = config.height || window.innerHeight / 2;
 		this.style = config.style || {};
+		this.actions = config.actions || <></>;
 
 		this.setState({ open: true });
 	}
@@ -59,18 +60,20 @@ class ComfirmContainer extends Component {
 						...this.style,
 					}}
 				>
-					<div id="responsive-dialog-title">{this.title}</div>
-					<div>
-						<div>{this.text}</div>
-					</div>
-					<div>
-						<button autoFocus onClick={() => this.cancel()}>
-							取消
-						</button>
-						<button onClick={() => this.submit()} autoFocus>
-							确定
-						</button>
-					</div>
+					{this.title && this.title}
+					{this.text && this.text}
+					{this.actions ? (
+						this.actions
+					) : (
+						<div>
+							<button autoFocus onClick={() => this.cancel()}>
+								取消
+							</button>
+							<button onClick={() => this.submit()} autoFocus>
+								确定
+							</button>
+						</div>
+					)}
 				</div>
 			)
 		);

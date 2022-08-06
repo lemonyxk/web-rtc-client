@@ -1,138 +1,135 @@
-@media screen and (min-width:800px) {
-    .chat {
+.chat {
+
+    @media screen and (min-width:800px) {
+        width: 800px;
+        height: 100%;
+        position: relative;
+    }
+
+    @media screen and (max-width:800px) {
         width: 100%;
         height: 100%;
+        position: relative;
+    }
+
     
-        .videos {
-    
-            width: 100%;
-            height: 50%;
+
+    .users {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        padding: 10px;
+
+        >div {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px;
-    
-            video {
-                height: 100%;
-                // background-color: black;
-                width: 50%;
-                // padding: 10px;
-            }
-    
-            video:nth-child(1) {
-               
-            }
-
-            div {
-                height: 300px;
-                // background-color: black;
-                width: 400px;
-                // padding: 10px;
-                display: flex;
-                justify-content: center;
-                align-items: flex-start;
-            }
-        }
-    
-        .users {
             width: 100%;
-            height: calc(100% - 50%);
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            flex-direction: column;
-            padding: 10px;
-    
+            
             >div {
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                width: 100%;
-                
-                margin: 5px 0;
+                margin: 5px 5px;
+            }
 
-                >div {
-                    width: 100px;
-                    height: 30px;
-                }
-    
-                button {
-                    width: 60px;
-                    height: 30px;
-                    margin: 0 0 0 5px;
-                }
+            >div:nth-child(1) {
+                width: 200px;
+                height: 30px;
+                line-height: 30px;
+            }
+            >div:nth-child(2) {
+                width: 100px;
+                height: 30px;
+                line-height: 30px;
             }
         }
     }
 }
 
-@media screen and (max-width:800px) {
-    .chat {
+
+.videos {
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+
+
+
+
+    .top {
         width: 100%;
         height: 100%;
-        overflow-y: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba($color: #ff0000, $alpha: 1);
+        // opacity:0.8;
+        position: relative;
 
-        .videos {
+        video {
+            object-fit: fill;
+        }
     
+        video:nth-child(2) {
             width: 100%;
-            height: 70%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            padding: 10px;
     
-            video {
-                height: 50%;
-                // background-color: black;
-                width: 100%;
-                // padding: 10px;
-            }
-    
-            video:nth-child(1) {
-               
-            }
-
-            div {
-                height: 300px;
-                // background-color: black;
-                width: 400px;
-                // padding: 10px;
-                display: flex;
-                justify-content: center;
-                align-items: flex-start;
-            }
+            // position: absolute;
+            // left: 0;
+            // bottom: 0;
         }
     
-        .users {
-            width: 100%;
-            // height: calc(100% - 300px);
+        video:nth-child(1) {
+            width: 30%;
+            height: 30%;
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
-            flex-direction: column;
-            padding: 10px;
     
-            >div {
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                width: 100%;
-                margin: 5px 0;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+    }
 
-                >div {
-                    width: 30%;
-                    height: 30px;
-                    line-height: 30px;
-                    
-                }
-    
-                button {
-                    width: 60px;
-                    height: 30px;
-                    margin: 0 5px;
-                }
-            }
+    .bottom {
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+        
+        img {
+            margin: 0 20px;
+        }
+
+        img:nth-child(1) {
+            width: 42px;
+            height: 42px; 
+        }
+
+        img:nth-child(2) {
+            width: 45px;
+            height: 45px; 
+        }
+
+        img:nth-child(3) {
+            width: 50px;
+            height: 50px;
         }
     }
 }
